@@ -1,15 +1,23 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"sort"
 )
 
 func deleteIfNecessary(users map[string]user, name string) (deleted bool, err error) {
-	// ?
+	elem, ok := users[name]
+	if ok != false {
+		if elem.scheduledForDeletion == true {
+			delete(users, name)
+			return true, nil
+		} else {
+			return false, nil
+		}
+	}
+	return false, errors.New("not found")
 }
-
-// don't touch below this line
 
 type user struct {
 	name                 string
